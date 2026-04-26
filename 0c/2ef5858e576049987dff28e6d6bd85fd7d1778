@@ -1,0 +1,29 @@
+run_competitor-intelligence-agent.sh
+  1fb2c6afb0680604 4-5
+run_simple-agent.sh
+  1fb2c6afb0680604 1-25
+.gitignore
+  1fb2c6afb0680604 4
+README.md
+  1fb2c6afb0680604 72,77
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "0c2ef5858e576049987dff28e6d6bd85fd7d1778",
+  "prompts": {
+    "1fb2c6afb0680604": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1c8f6659-ae2e-4798-bd74-207c62475868",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Tristan Ratchford",
+      "messages": [],
+      "total_additions": 30,
+      "total_deletions": 2,
+      "accepted_lines": 345,
+      "overriden_lines": 0
+    }
+  }
+}
