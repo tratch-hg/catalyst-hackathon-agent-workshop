@@ -1,24 +1,59 @@
 """
 Competitor Intelligence Agent
 ---------------------------------
-Run:  python agent.py
-      python agent.py "Salesforce"
+Run:  python competitor-intelligence-agent.py
+      python competitor-intelligence-agent.py "Salesforce"
 
 The agent autonomously searches the web, fetches pages, and produces a
 self-contained HTML intelligence report saved to disk.
 """
 
+import json
+import os
 import re
 import sys
+from urllib.parse import parse_qs, unquote, urlparse
 import requests
 from bs4 import BeautifulSoup
 import anthropic
+
+# ---------------------------------------------------------------------------
+# Datadog LLM Observability (optional — works without it if not configured)
+# ---------------------------------------------------------------------------
+try:
+    from ddtrace.llmobs import LLMObs
+    _DD_AVAILABLE = True
+except ImportError:
+    _DD_AVAILABLE = False
+
+DD_ENABLED = _DD_AVAILABLE and bool(os.environ.get("DD_API_KEY"))
+if DD_ENABLED:
+    LLMObs.enable(
+        ml_app=os.environ.get("DD_LLMOBS_ML_APP", "competitor-intelligence-agent"),
+        api_key=os.environ.get("DD_API_KEY"),
+        site=os.environ.get("DD_SITE", "us5.datadoghq.com"),
+        agentless_enabled=True,
+    )
 
 # ---------------------------------------------------------------------------
 # Client
 # ---------------------------------------------------------------------------
 client = anthropic.Anthropic()
 MODEL = "claude-sonnet-4-6"
+MAX_TOKENS = 32000  # streamed; the final report HTML can be large
+
+
+def _call_claude(messages: list):
+    """Stream a turn and return the final Message. Streaming is required
+    above ~16k max_tokens, and report HTML can easily blow past that."""
+    with client.messages.stream(
+        model=MODEL,
+        max_tokens=MAX_TOKENS,
+        system=SYSTEM_PROMPT,
+        tools=TOOLS,
+        messages=messages,
+    ) as stream:
+        return stream.get_final_message()
 
 # ---------------------------------------------------------------------------
 # Tool definitions  (plain JSON — exactly what Claude sees)
@@ -88,6 +123,20 @@ TOOLS = [
 # Tool implementations
 # ---------------------------------------------------------------------------
 
+def _unwrap_ddg_url(href: str) -> str:
+    """DuckDuckGo wraps result links in `//duckduckgo.com/l/?uddg=<encoded-target>`.
+    Pull the real target out so fetch_page receives a usable URL."""
+    if not href:
+        return "N/A"
+    normalized = "https:" + href if href.startswith("//") else href
+    parsed = urlparse(normalized)
+    if parsed.netloc.endswith("duckduckgo.com") and parsed.path.startswith("/l/"):
+        target = parse_qs(parsed.query).get("uddg", [""])[0]
+        if target:
+            return unquote(target)
+    return normalized
+
+
 def web_search(query: str) -> str:
     """Search DuckDuckGo and return top results (no API key required)."""
     try:
@@ -103,11 +152,11 @@ def web_search(query: str) -> str:
         for r in soup.select(".result")[:6]:
             title = r.select_one(".result__title")
             snippet = r.select_one(".result__snippet")
-            url = r.select_one(".result__url")
+            url = r.select_one(".result__a")
             if title and snippet:
                 results.append(
                     f"Title: {title.get_text(strip=True)}\n"
-                    f"URL: {url.get_text(strip=True) if url else 'N/A'}\n"
+                    f"URL: {_unwrap_ddg_url(url.get('href')) if url else 'N/A'}\n"
                     f"Snippet: {snippet.get_text(strip=True)}"
                 )
         return "\n\n".join(results) if results else "No results found."
@@ -138,7 +187,7 @@ def save_report(filename: str, html: str) -> str:
     return f"Report saved to {filename}"
 
 
-def execute_tool(name: str, inputs: dict) -> str:
+def _execute_tool_impl(name: str, inputs: dict) -> str:
     """Dispatch a tool call to the correct implementation."""
     if name == "web_search":
         return web_search(**inputs)
@@ -147,6 +196,16 @@ def execute_tool(name: str, inputs: dict) -> str:
     if name == "save_report":
         return save_report(**inputs)
     return f"Unknown tool: {name}"
+
+
+def execute_tool(name: str, inputs: dict) -> str:
+    """Execute a tool, optionally wrapped in a Datadog span."""
+    if DD_ENABLED:
+        with LLMObs.tool(name=name) as span:
+            result = _execute_tool_impl(name, inputs)
+            LLMObs.annotate(span, input_data=inputs, output_data=result)
+            return result
+    return _execute_tool_impl(name, inputs)
 
 
 # ---------------------------------------------------------------------------
@@ -194,81 +253,120 @@ def run_agent(company: str) -> None:
     print(f"\n{'='*60}")
     print(f"  Competitor Intelligence Agent")
     print(f"  Target: {company}")
+    if DD_ENABLED:
+        print(f"  Datadog LLM Observability: ON")
     print(f"{'='*60}\n")
 
-    while True:
-        turn += 1
-        print(f"[Turn {turn}] Calling Claude ({MODEL})...")
+    def _loop():
+        nonlocal saved_file, turn
 
-        response = client.messages.create(
-            model=MODEL,
-            max_tokens=16000,
-            system=SYSTEM_PROMPT,
-            tools=TOOLS,
-            messages=messages,
-        )
+        while True:
+            turn += 1
+            print(f"[Turn {turn}] Calling Claude ({MODEL})...")
 
-        usage = response.usage
-        print(f"[Turn {turn}] Stop reason: {response.stop_reason}  |  "
-              f"Tokens in: {usage.input_tokens}  out: {usage.output_tokens}")
+            if DD_ENABLED:
+                with LLMObs.llm(
+                    model_name=MODEL,
+                    model_provider="anthropic",
+                    name="agent_llm_call",
+                ) as span:
+                    response = _call_claude(messages)
+                    out_text = next(
+                        (b.text for b in response.content if hasattr(b, "text")), ""
+                    )
+                    last_user = next(
+                        (m for m in reversed(messages) if m.get("role") == "user"),
+                        None,
+                    )
+                    input_text = last_user.get("content", "") if last_user else ""
+                    if not isinstance(input_text, str):
+                        input_text = json.dumps(input_text, default=str)
+                    LLMObs.annotate(
+                        span,
+                        input_data=[{"role": "user", "content": input_text}],
+                        output_data=[{"role": "assistant", "content": out_text}],
+                        metrics={
+                            "input_tokens": response.usage.input_tokens,
+                            "output_tokens": response.usage.output_tokens,
+                        },
+                    )
+            else:
+                response = _call_claude(messages)
 
-        # Print any text the model produced
-        for block in response.content:
-            if hasattr(block, "type") and block.type == "text" and block.text.strip():
-                snippet = block.text.strip()[:200].replace("\n", " ")
-                print(f"[Turn {turn}] Assistant: {snippet}{'...' if len(block.text.strip()) > 200 else ''}")
-
-        # Append the assistant turn
-        messages.append({"role": "assistant", "content": response.content})
-
-        # ── Done ──────────────────────────────────────────────────────────
-        if response.stop_reason == "end_turn":
-            print(f"[Turn {turn}] Agent finished.\n")
-            break
-
-        # ── Tool call(s) needed ───────────────────────────────────────────
-        if response.stop_reason == "tool_use":
-            tool_results = []
+            usage = response.usage
+            print(f"[Turn {turn}] Stop reason: {response.stop_reason}  |  "
+                  f"Tokens in: {usage.input_tokens}  out: {usage.output_tokens}")
 
             for block in response.content:
-                if block.type != "tool_use":
-                    continue
+                if hasattr(block, "type") and block.type == "text" and block.text.strip():
+                    snippet = block.text.strip()[:200].replace("\n", " ")
+                    print(f"[Turn {turn}] Assistant: {snippet}{'...' if len(block.text.strip()) > 200 else ''}")
 
-                if block.name == "fetch_page":
-                    detail = block.input.get("url", "")
-                elif block.name == "save_report":
-                    detail = block.input.get("filename", "")
-                elif block.name == "web_search":
-                    detail = block.input.get("query", "")
-                else:
-                    detail = ", ".join(f"{k}={v!r}" for k, v in block.input.items())
+            messages.append({"role": "assistant", "content": response.content})
 
-                print(f"[Turn {turn}] -> {block.name}({detail})")
-                result = execute_tool(block.name, block.input)
+            if response.stop_reason == "end_turn":
+                print(f"[Turn {turn}] Agent finished.\n")
+                break
 
-                if block.name == "save_report":
-                    saved_file = block.input.get("filename")
-                    print(f"[Turn {turn}]    Saved: {saved_file}")
-                elif block.name == "fetch_page":
-                    print(f"[Turn {turn}]    Fetched {len(result)} chars")
-                elif block.name == "web_search":
-                    print(f"[Turn {turn}]    Got {result.count('Title:')} results")
-
-                tool_results.append(
-                    {
-                        "type": "tool_result",
-                        "tool_use_id": block.id,
-                        "content": result,
-                    }
+            if response.stop_reason == "max_tokens":
+                print(
+                    f"[Turn {turn}] Hit max_tokens ({MAX_TOKENS}). "
+                    "Bump MAX_TOKENS or tighten the system prompt."
                 )
+                break
 
-            print()
-            messages.append({"role": "user", "content": tool_results})
-            continue
+            if response.stop_reason == "tool_use":
+                tool_results = []
 
-        # Unexpected stop reason — bail out
-        print(f"[Turn {turn}] Unexpected stop_reason: {response.stop_reason}")
-        break
+                for block in response.content:
+                    if block.type != "tool_use":
+                        continue
+
+                    if block.name == "fetch_page":
+                        detail = block.input.get("url", "")
+                    elif block.name == "save_report":
+                        detail = block.input.get("filename", "")
+                    elif block.name == "web_search":
+                        detail = block.input.get("query", "")
+                    else:
+                        detail = ", ".join(f"{k}={v!r}" for k, v in block.input.items())
+
+                    print(f"[Turn {turn}] -> {block.name}({detail})")
+                    result = execute_tool(block.name, block.input)
+
+                    if block.name == "save_report":
+                        saved_file = block.input.get("filename")
+                        print(f"[Turn {turn}]    Saved: {saved_file}")
+                    elif block.name == "fetch_page":
+                        print(f"[Turn {turn}]    Fetched {len(result)} chars")
+                    elif block.name == "web_search":
+                        print(f"[Turn {turn}]    Got {result.count('Title:')} results")
+
+                    tool_results.append(
+                        {
+                            "type": "tool_result",
+                            "tool_use_id": block.id,
+                            "content": result,
+                        }
+                    )
+
+                print()
+                messages.append({"role": "user", "content": tool_results})
+                continue
+
+            print(f"[Turn {turn}] Unexpected stop_reason: {response.stop_reason}")
+            break
+
+    if DD_ENABLED:
+        with LLMObs.agent(name="competitor-intelligence-agent") as span:
+            _loop()
+            LLMObs.annotate(
+                span,
+                input_data=f"Research this company: {company}",
+                output_data=f"Report saved to {saved_file}" if saved_file else "No report saved",
+            )
+    else:
+        _loop()
 
     if saved_file:
         print(f"{'='*60}")
