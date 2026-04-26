@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HubSpot — Competitor Intelligence Report</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .gradient-hero { background: linear-gradient(135deg, #ff7a59 0%, #ff5c35 40%, #c0392b 100%); }
+    .card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+    .table-stripe tr:nth-child(even) { background-color: #f8fafc; }
+    .check { color: #22c55e; font-size: 1.1rem; }
+    .cross { color: #ef4444; font-size: 1.1rem; }
+    .partial { color: #f59e0b; font-size: 1.1rem; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- ============================================================
+       HERO HEADER
+  ============================================================ -->
+  <header class="gradient-hero text-white py-20 px-6 shadow-xl">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8">
+      <!-- Logo Placeholder -->
+      <div class="flex-shrink-0 w-24 h-24 rounded-2xl bg-white bg-opacity-20 border-2 border-white border-opacity-40 flex items-center justify-center shadow-lg">
+        <span class="text-4xl font-black text-white">HS</span>
+      </div>
+      <div>
+        <div class="flex items-center gap-3 mb-2">
+          <span class="bg-white bg-opacity-20 text-white text-xs font-semibold px-3 py-1 rounded-full tracking-widest uppercase">Competitor Intelligence Report</span>
+          <span class="bg-white bg-opacity-20 text-white text-xs px-3 py-1 rounded-full">NYSE: HUBS</span>
+        </div>
+        <h1 class="text-5xl font-extrabold tracking-tight mb-3">HubSpot, Inc.</h1>
+        <p class="text-xl text-orange-100 font-light max-w-2xl">
+          The all-in-one inbound marketing, sales, and customer service platform powering over 200,000 businesses worldwide — now supercharged with AI.
+        </p>
+        <div class="mt-5 flex flex-wrap gap-3">
+          <span class="bg-white bg-opacity-15 rounded-full px-4 py-1 text-sm font-medium">📍 Cambridge, MA</span>
+          <span class="bg-white bg-opacity-15 rounded-full px-4 py-1 text-sm font-medium">📅 Founded 2006</span>
+          <span class="bg-white bg-opacity-15 rounded-full px-4 py-1 text-sm font-medium">💰 $2.63B Revenue (2024)</span>
+          <span class="bg-white bg-opacity-15 rounded-full px-4 py-1 text-sm font-medium">👥 8,246 Employees</span>
+          <span class="bg-white bg-opacity-15 rounded-full px-4 py-1 text-sm font-medium">🌐 CRM · Marketing · Sales · Service</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-12 space-y-16">
+
+    <!-- ============================================================
+         ABOUT SECTION
+    ============================================================ -->
+    <section id="about">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-1 h-8 bg-orange-500 rounded-full"></div>
+        <h2 class="text-3xl font-bold text-gray-900">About HubSpot</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Company Story -->
+        <div class="bg-white rounded-2xl p-7 shadow-sm border border-gray-100">
+          <h3 class="text-lg font-semibold text-orange-600 mb-3">🏢 Company Overview</h3>
+          <p class="text-gray-600 leading-relaxed text-sm">
+            HubSpot was founded in <strong>June 2006</strong> by <strong>Brian Halligan</strong> and <strong>Dharmesh Shah</strong> at MIT, pioneering the concept of <em>inbound marketing</em> — attracting customers through valuable content rather than interruptive advertising. The company went public on the NYSE in <strong>2014</strong> (ticker: <span class="font-mono font-bold text-orange-500">HUBS</span>), raising $140M+ at $25/share, with shares peaking at $840 in November 2021.
+          </p>
+          <p class="text-gray-600 leading-relaxed text-sm mt-3">
+            Today HubSpot is led by <strong>CEO Yamini Rangan</strong> (since 2021), with Halligan serving as Chairman and Shah as CTO. Headquartered in Cambridge, Massachusetts, the company serves customers across every continent with a freemium-to-enterprise go-to-market model.
+          </p>
+        </div>
+
+        <!-- Key Stats -->
+        <div class="bg-white rounded-2xl p-7 shadow-sm border border-gray-100">
+          <h3 class="text-lg font-semibold text-orange-600 mb-4">📊 Key Financials & Metrics</h3>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-orange-50 rounded-xl p-4 text-center">
+              <div class="text-2xl font-extrabold text-orange-600">$2.63B</div>
+              <div class="text-xs text-gray-500 mt-1">2024 Revenue</div>
+            </div>
+            <div class="bg-blue-50 rounded-xl p-4 text-center">
+              <div class="text-2xl font-extrabold text-blue-600">8,246</div>
+              <div class="text-xs text-gray-500 mt-1">Employees (2024)</div>
+            </div>
+            <div class="bg-green-50 rounded-xl p-4 text-center">
+              <div class="text-2xl font-extrabold text-green-600">$4.63M</div>
+              <div class="text-xs text-gray-500 mt-1">Net Income (2024)</div>
+            </div>
+            <div class="bg-purple-50 rounded-xl p-4 text-center">
+              <div class="text-2xl font-extrabold text-purple-600">$3.79B</div>
+              <div class="text-xs text-gray-500 mt-1">Total Assets (2024)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="mt-6">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">🛠️ Product Suite</h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+          <div class="bg-white border border-orange-200 rounded-xl p-4 text-center shadow-sm">
+            <div class="text-2xl mb-2">📣</div>
+            <div class="font-semibold text-sm text-gray-800">Marketing Hub</div>
+            <div class="text-xs text-gray-500 mt-1">Email, automation, SEO, analytics</div>
+          </div>
+          <div class="bg-white border border-blue-200 rounded-xl p-4 text-center shadow-sm">
+            <div class="text-2xl mb-2">💼</div>
+            <div class="font-semibold text-sm text-gray-800">Sales Hub</div>
+            <div class="text-xs text-gray-500 mt-1">Pipeline, sequences, deal tracking</div>
+          </div>
+          <div class="bg-white border border-green-200 rounded-xl p-4 text-center shadow-sm">
+            <div class="text-2xl mb-2">🎧</div>
+            <div class="font-semibold text-sm text-gray-800">Service Hub</div>
+            <div class="text-xs text-gray-500 mt-1">Ticketing, helpdesk, feedback</div>
+          </div>
+          <div class="bg-white border border-purple-200 rounded-xl p-4 text-center shadow-sm">
+            <div class="text-2xl mb-2">✍️</div>
+            <div class="font-semibold text-sm text-gray-800">Content Hub</div>
+            <div class="text-xs text-gray-500 mt-1">CMS, AI writing, brand voice</div>
+          </div>
+          <div class="bg-white border border-yellow-200 rounded-xl p-4 text-center shadow-sm">
+            <div class="text-2xl mb-2">⚙️</div>
+            <div class="font-semibold text-sm text-gray-800">Data Hub</div>
+            <div class="text-xs text-gray-500 mt-1">Data sync, reporting, ops</div>
+          </div>
+          <div class="bg-white border border-red-200 rounded-xl p-4 text-center shadow-sm">
+            <div class="text-2xl mb-2">🤝</div>
+            <div class="font-semibold text-sm text-gray-800">SMART CRM</div>
+            <div class="text-xs text-gray-500 mt-1">Free CRM core across all hubs</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pricing Tiers -->
+      <div class="mt-6 bg-white rounded-2xl p-7 shadow-sm border border-gray-100">
+        <h3 class="text-lg font-semibold text-orange-600 mb-4">💳 Pricing Tiers</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="border border-gray-200 rounded-xl p-4 text-center">
+            <div class="text-lg font-bold text-gray-800">Free</div>
+            <div class="text-2xl font-extrabold text-green-600 my-2">$0</div>
+            <div class="text-xs text-gray-500">Core CRM, basic forms, limited features</div>
+          </div>
+          <div class="border border-orange-200 rounded-xl p-4 text-center bg-orange-50">
+            <div class="text-lg font-bold text-gray-800">Starter</div>
+            <div class="text-2xl font-extrabold text-orange-500 my-2">~$20<span class="text-sm">/mo</span></div>
+            <div class="text-xs text-gray-500">Basic automation, simple analytics, ads</div>
+          </div>
+          <div class="border border-blue-200 rounded-xl p-4 text-center bg-blue-50">
+            <div class="text-lg font-bold text-gray-800">Professional</div>
+            <div class="text-2xl font-extrabold text-blue-600 my-2">~$890<span class="text-sm">/mo</span></div>
+            <div class="text-xs text-gray-500">Advanced workflows, A/B testing, custom reporting</div>
+          </div>
+          <div class="border border-purple-200 rounded-xl p-4 text-center bg-purple-50">
+            <div class="text-lg font-bold text-gray-800">Enterprise</div>
+            <div class="text-2xl font-extrabold text-purple-600 my-2">~$3,600<span class="text-sm">/mo</span></div>
+            <div class="text-xs text-gray-500">Revenue reporting, custom events, SSO, partitioning</div>
+          </div>
+        </div>
+        <p class="text-xs text-gray-400 mt-3">* Pricing varies per hub and seat count. Bundle pricing available for multiple hubs.</p>
+      </div>
+
+      <!-- Recent Strategic Moves -->
+      <div class="mt-6 bg-white rounded-2xl p-7 shadow-sm border border-gray-100">
+        <h3 class="text-lg font-semibold text-orange-600 mb-4">⚡ Recent Strategic Moves & News</h3>
+        <ul class="space-y-3">
+          <li class="flex gap-3 items-start">
+            <span class="mt-0.5 text-orange-400 text-lg">🤖</span>
+            <div>
+              <span class="font-semibold text-gray-800">Breeze AI Platform (2024–2025):</span>
+              <span class="text-gray-600 text-sm"> Launched Breeze AI Agents and Breeze Assistant, embedding generative AI across all hubs for automated workflows, content generation, and data analysis.</span>
+            </div>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="mt-0.5 text-orange-400 text-lg">🔍</span>
+            <div>
+              <span class="font-semibold text-gray-800">Clearbit Acquisition (Nov 2023):</span>
+              <span class="text-gray-600 text-sm"> Acquired B2B intelligence firm Clearbit to enrich CRM data with real-time firmographic and technographic insights for better targeting.</span>
+            </div>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="mt-0.5 text-orange-400 text-lg">🧠</span>
+            <div>
+              <span class="font-semibold text-gray-800">Frame AI Acquisition (Dec 2024):</span>
+              <span class="text-gray-600 text-sm"> Acquired Frame AI to deepen conversational intelligence and sentiment analysis capabilities within the service and marketing products.</span>
+            </div>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="mt-0.5 text-orange-400 text-lg">🌐</span>
+            <div>
+              <span class="font-semibold text-gray-800">Google Acquisition Talks (Apr–Jul 2024):</span>
+              <span class="text-gray-600 text-sm"> Google reportedly explored acquiring HubSpot (est. $8B+), but abandoned the bid in July 2024. The news unsettled customers, with 48% considering alternatives.</span>
+            </div>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="mt-0.5 text-orange-400 text-lg">🔗</span>
+            <div>
+              <span class="font-semibold text-gray-800">Claude CRM Connector (Jul 2025):</span>
+              <span class="text-gray-600 text-sm"> Released a CRM connector for Anthropic's Claude, enabling natural language queries against CRM data — a significant AI interoperability move.</span>
+            </div>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="mt-0.5 text-orange-400 text-lg">📡</span>
+            <div>
+              <span class="font-semibold text-gray-800">XFunnel Acquisition (Nov 2025):</span>
+              <span class="text-gray-600 text-sm"> Acquired Israeli AI startup XFunnel to expand into AI-driven search and answer engine optimisation (AEO), signalling intent to compete in the AI search era.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         COMPETITORS SECTION
+    ============================================================ -->
+    <section id="competitors">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-1 h-8 bg-blue-500 rounded-full"></div>
+        <h2 class="text-3xl font-bold text-gray-900">Key Competitors</h2>
+      </div>
+      <p class="text-gray-500 mb-8 -mt-2">HubSpot competes across multiple software categories — CRM, marketing automation, sales enablement, and customer service. Here are its primary rivals.</p>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Salesforce -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 card-hover">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 rounded-xl bg-blue-100 flex items-center justify-center font-black text-blue-700 text-xl">SF</div>
+            <div>
+              <h3 class="font-bold text-lg text-gray-900">Salesforce</h3>
+              <p class="text-xs text-blue-600 font-medium">The Enterprise CRM Giant</p>
+            </div>
+          </div>
+          <p class="text-gray-500 text-sm mb-4">The world's #1 CRM platform, targeting large enterprises with deep customisability, a vast ecosystem (AppExchange), and industry-specific clouds.</p>
+          <div class="space-y-3">
+            <div>
+              <p class="text-xs font-semibold text-green-700 uppercase tracking-wide mb-1">✅ Strengths</p>
+              <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                <li>Unmatched enterprise feature depth</li>
+                <li>Massive AppExchange ecosystem (7,000+ apps)</li>
+                <li>Industry-specific cloud solutions</li>
+                <li>Einstein AI deeply integrated</li>
+                <li>$34B+ annual revenue — financial muscle</li>
+              </ul>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-red-600 uppercase tracking-wide mb-1">❌ Weaknesses</p>
+              <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                <li>Very high cost and complex pricing</li>
+                <li>Steep learning curve / long implementation</li>
+                <li>Overkill for SMBs</li>
+                <li>Requires dedicated admins/consultants</li>
+              </ul>
+            </div>
+          </div>
+          <div class="mt-4 bg-blue-50 rounded-lg px-3 py-2 text-xs text-blue-700 font-medium">
+            💡 HubSpot's edge: Far easier to use; better for SMB/mid-market; lower TCO
+          </div>
+        </div>
+
+        <!-- Zoho CRM -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 card-hover">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 rounded-xl bg-red-100 flex items-center justify-center font-black text-red-700 text-xl">ZO</div>
+            <div>
+              <h3 class="font-bold text-lg text-gray-900">Zoho CRM</h3>
+              <p class="text-xs text-red-600 font-medium">The Value-for-Money Suite</p>
+            </div>
+          </div>
+          <p class="text-gray-500 text-sm mb-4">A comprehensive, budget-friendly CRM suite backed by Zoho's vast 50+ product ecosystem, popular with price-sensitive SMBs globally.</p>
+          <div class="space-y-3">
+            <div>
+              <p class="text-xs font-semibold text-green-700 uppercase tracking-wide mb-1">✅ Strengths</p>
+              <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                <li>Extremely competitive pricing</li>
+                <li>50+ integrated business apps (Zoho One)</li>
+                <li>Strong customisation with low code</li>
+                <li>Zia AI assistant built-in</li>
+                <li>Solid global presence / multi-language</li>
+              </ul>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-red-600 uppercase tracking-wide mb-1">❌ Weaknesses</p>
+              <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                <li>UI/UX less polished than HubSpot</li>
+                <li>Smaller partner and integration ecosystem</li>
+                <li>Support quality inconsistencies</li>
+                <li>Less brand recognition in North America</li>
+              </ul>
+            </div>
+          </div>
+          <div class="mt-4 bg-red-50 rounded-lg px-3 py-2 text-xs text-red-700 font-medium">
+            💡 HubSpot's edge: Superior UX, better inbound marketing tools, stronger brand
+          </div>
+        </div>
+
+        <!-- Marketo / Adobe -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 card-hover">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 rounded-xl bg-purple-100 flex items-center justify-center font-black text-purple-700 text-xl">MK</div>
+            <div>
+              <h3 class="font-bold text-lg text-gray-900">Adobe Marketo Engage</h3>
+              <p class="text-xs text-purple-600 font-medium">The B2B Marketing Automation Leader</p>
+            </div>
+          </div>
+          <p class="text-gray-500 text-sm mb-4">Adobe's flagship B2B marketing automation platform, targeting mid-market to enterprise with advanced lead nurturing, ABM, and deep CRM integrations.</p>
+          <div class="space-y-3">
+            <div>
+              <p class="text-xs font-semibold text-green-700 uppercase tracking-wide mb-1">✅ Strengths</p>
+              <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                <li>Powerful B2B lead management & ABM</li>
+                <li>Deep Salesforce CRM integration</li>
+                <li>Adobe Experience Cloud synergy</li>
+                <li>Sophisticated lead scoring & nurturing</li>
+              </ul>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-red-600 uppercase tracking-wide mb-1">❌ Weaknesses</p>
+              <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                <li>Very high price point (enterprise only)</li>
+                <li>Steep learning curve</li>
+                <li>No native CRM — requires Salesforce</li>
+                <li>Slow product innovation pace</li>
+              </ul>
+            </div>
+          </div>
+          <div class="mt-4 bg-purple-50 rounded-lg px-3 py-2 text-xs text-purple-700 font-medium">
+            💡 HubSpot's edge: All-in-one with native CRM; far more accessible for smaller teams
+          </div>
+        </div>
+
+        <!-- ActiveCampaign -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 card-hover">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 rounded-xl bg-teal-100 flex items-center justify-center font-black text-teal-700 text-xl">AC</div>
+            <div>
+              <h3 class="font-bold text-lg text-gray-900">ActiveCampaign</h3>
+              <p class="text-xs text-teal-600 font-medium">The SMB Marketing Automation Specialist</p>
+            </div>
+          </div>
+          <p class="text-gray-500 text-sm mb-4">A fast-growing marketing automation and email platform beloved by small businesses for powerful automation at an accessible price point.</p>
+          <div class="space-y-3">
+            <div>
+              <p class="text-xs font-semibold text-green-700 uppercase tracking-wide mb-1">✅ Strengths</p>
+              <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                <li>Best-in-class email automation</li>
+                <li>Very affordable for small teams</li>
+                <li>Intuitive visual automation builder</li>
+                <li>Strong deliverability track record</li>
+              </ul>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-red-600 uppercase tracking-wide mb-1">❌ Weaknesses</p>
+              <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                <li>Limited CRM capabilities vs HubSpot</li>
+                <li>No free plan (unlike HubSpot)</li>
+                <li>Weaker SEO/content tools</li>
+                <li>Less suitable for sales-heavy orgs</li>
+              </ul>
+            </div>
+          </div>
+          <div class="mt-4 bg-teal-50 rounded-lg px-3 py-2 text-xs text-teal-700 font-medium">
+            💡 HubSpot's edge: Broader platform (CRM + Sales + Service); free tier entry point
+          </div>
+        </div>
+
+        <!-- Pipedrive -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 card-hover">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center font-black text-green-700 text-xl">PD</div>
+            <div>
+              <h3 class="font-bold text-lg text-gray-900">Pipedrive</h3>
+              <p class="text-xs text-green-600 font-medium">The Sales-First CRM</p>
+            </div>
+          </div>
+          <p class="text-gray-500 text-sm mb-4">A sales-focused CRM renowned for its visual pipeline management and ease of use, primarily targeting small and mid-size sales teams.</p>
+          <div class="space-y-3">
+            <div>
+              <p class="text-xs font-semibold text-green-700 uppercase tracking-wide mb-1">✅ Strengths</p>
+              <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                <li>Intuitive visual deal pipeline</li>
+                <li>Sales-rep-first UX design</li>
+                <li>Transparent, low-cost pricing</li>
+                <li>Fast onboarding and adoption</li>
+              </ul>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-red-600 uppercase tracking-wide mb-1">❌ Weaknesses</p>
+              <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                <li>No marketing automation suite</li>
+                <li>Limited reporting vs HubSpot</li>
+                <li>No free plan</li>
+                <li>Weak customer service tools</li>
+              </ul>
+            </div>
+          </div>
+          <div class="mt-4 bg-green-50 rounded-lg px-3 py-2 text-xs text-green-700 font-medium">
+            💡 HubSpot's edge: Full marketing + service stack; free tier; content tools
+          </div>
+        </div>
+
+        <!-- Klaviyo -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 card-hover">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 rounded-xl bg-yellow-100 flex items-center justify-center font-black text-yellow-700 text-xl">KV</div>
+            <div>
+              <h3 class="font-bold text-lg text-gray-900">Klaviyo</h3>
+              <p class="text-xs text-yellow-600 font-medium">The eCommerce Marketing Powerhouse</p>
+            </div>
+          </div>
+          <p class="text-gray-500 text-sm mb-4">A data-driven email and SMS marketing platform specifically optimised for eCommerce brands, with deep Shopify integration and predictive analytics.</p>
+          <div class="space-y-3">
+            <div>
+              <p class="text-xs font-semibold text-green-700 uppercase tracking-wide mb-1">✅ Strengths</p>
+              <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                <li>Superior eCommerce-native integrations</li>
+                <li>Predictive analytics & CLV modelling</li>
+                <li>Best-in-class SMS + email combined</li>
+                <li>Deep Shopify / WooCommerce synergy</li>
+              </ul>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-red-600 uppercase tracking-wide mb-1">❌ Weaknesses</p>
+              <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                <li>Primarily eCommerce vertical only</li>
+                <li>No native CRM or sales pipeline</li>
+                <li>Limited B2B suitability</li>
+                <li>Can get expensive at scale</li>
+              </ul>
+            </div>
+          </div>
+          <div class="mt-4 bg-yellow-50 rounded-lg px-3 py-2 text-xs text-yellow-700 font-medium">
+            💡 HubSpot's edge: B2B strength; full-funnel CRM; broader industry coverage
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FEATURE COMPARISON TABLE
+    ============================================================ -->
+    <section id="comparison">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-1 h-8 bg-purple-500 rounded-full"></div>
+        <h2 class="text-3xl font-bold text-gray-900">Feature Comparison</h2>
+      </div>
+      <p class="text-gray-500 mb-6 -mt-2">HubSpot vs its top three rivals across key product dimensions.</p>
+
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="bg-gradient-to-r from-orange-500 to-red-500 text-white">
+                <th class="px-5 py-4 text-left font-semibold w-1/4">Feature / Capability</th>
+                <th class="px-5 py-4 text-center font-semibold">
+                  <div>🟠 HubSpot</div>
+                </th>
+                <th class="px-5 py-4 text-center font-semibold">
+                  <div>🔵 Salesforce</div>
+                </th>
+                <th class="px-5 py-4 text-center font-semibold">
+                  <div>🔴 Zoho CRM</div>
+                </th>
+                <th class="px-5 py-4 text-center font-semibold">
+                  <div>🟣 Marketo</div>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="table-stripe divide-y divide-gray-100">
+              <tr class="bg-orange-50">
+                <td colspan="5" class="px-5 py-2 text-xs font-bold text-orange-700 uppercase tracking-wide">Platform & CRM</td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3 text-gray-700 font-medium">Free CRM Tier</td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="cross">✘</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span> <span class="text-xs text-gray-400">(limited)</span></td>
+                <td class="px-5 py-3 text-center"><span class="cross">✘</span></td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3 text-gray-700 font-medium">Native CRM (no plugin needed)</td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="cross">✘</span> <span class="text-xs text-gray-400">(needs SFDC)</span></td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3 text-gray-700 font-medium">Contact & Deal Management</td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="partial">◑</span></td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3 text-gray-700 font-medium">Enterprise Scalability</td>
+                <td class="px-5 py-3 text-center"><span class="partial">◑</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="partial">◑</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+              </tr>
+              <tr class="bg-blue-50">
+                <td colspan="5" class="px-5 py-2 text-xs font-bold text-blue-700 uppercase tracking-wide">Marketing</td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3 text-gray-700 font-medium">Email Marketing Automation</td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="partial">◑</span> <span class="text-xs text-gray-400">(via MC)</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3 text-gray-700 font-medium">SEO & Content Tools</td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="cross">✘</span></td>
+                <td class="px-5 py-3 text-center"><span class="partial">◑</span></td>
+                <td class="px-5 py-3 text-center"><span class="partial">◑</span></td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3 text-gray-700 font-medium">Landing Pages & Forms</td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="partial">◑</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3 text-gray-700 font-medium">Social Media Management</td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="partial">◑</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="cross">✘</span></td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3 text-gray-700 font-medium">Account-Based Marketing (ABM)</td>
+                <td class="px-5 py-3 text-center"><span class="partial">◑</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="partial">◑</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+              </tr>
+              <tr class="bg-green-50">
+                <td colspan="5" class="px-5 py-2 text-xs font-bold text-green-700 uppercase tracking-wide">Sales & Service</td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3 text-gray-700 font-medium">Sales Pipeline Management</td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="cross">✘</span></td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3 text-gray-700 font-medium">Customer Service / Helpdesk</td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span> <span class="text-xs text-gray-400">(Service Cloud)</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="cross">✘</span></td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3 text-gray-700 font-medium">Live Chat & Chatbots</td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="cross">✘</span></td>
+              </tr>
+              <tr class="bg-purple-50">
+                <td colspan="5" class="px-5 py-2 text-xs font-bold text-purple-700 uppercase tracking-wide">AI & Innovation</td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3 text-gray-700 font-medium">Native Generative AI Tools</td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span> <span class="text-xs text-gray-400">Breeze AI</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span> <span class="text-xs text-gray-400">Einstein AI</span></td>
+                <td class="px-5 py-3 text-center"><span class="partial">◑</span> <span class="text-xs text-gray-400">Zia AI</span></td>
+                <td class="px-5 py-3 text-center"><span class="partial">◑</span></td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3 text-gray-700 font-medium">AI Content Generation</td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="partial">◑</span></td>
+                <td class="px-5 py-3 text-center"><span class="partial">◑</span></td>
+                <td class="px-5 py-3 text-center"><span class="partial">◑</span></td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3 text-gray-700 font-medium">Third-Party AI Integrations</td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span> <span class="text-xs text-gray-400">Claude, OpenAI</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="partial">◑</span></td>
+                <td class="px-5 py-3 text-center"><span class="partial">◑</span></td>
+              </tr>
+              <tr class="bg-yellow-50">
+                <td colspan="5" class="px-5 py-2 text-xs font-bold text-yellow-700 uppercase tracking-wide">Usability & Pricing</td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3 text-gray-700 font-medium">Ease of Use (SMB-friendly)</td>
+                <td class="px-5 py-3 text-center"><span class="check">✔ ✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="cross">✘</span></td>
+                <td class="px-5 py-3 text-center"><span class="partial">◑</span></td>
+                <td class="px-5 py-3 text-center"><span class="cross">✘</span></td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3 text-gray-700 font-medium">Transparent Pricing</td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="cross">✘</span> <span class="text-xs text-gray-400">(quote-based)</span></td>
+                <td class="px-5 py-3 text-center"><span class="check">✔</span></td>
+                <td class="px-5 py-3 text-center"><span class="cross">✘</span></td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3 text-gray-700 font-medium">Implementation Time</td>
+                <td class="px-5 py-3 text-center text-green-700 font-semibold">Days–Weeks</td>
+                <td class="px-5 py-3 text-center text-red-600 font-semibold">Months</td>
+                <td class="px-5 py-3 text-center text-yellow-600 font-semibold">Weeks</td>
+                <td class="px-5 py-3 text-center text-red-600 font-semibold">Months</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="px-5 py-3 bg-gray-50 border-t border-gray-100 flex gap-5 text-xs text-gray-500">
+          <span><span class="check">✔</span> = Full support</span>
+          <span><span class="partial">◑</span> = Partial / add-on</span>
+          <span><span class="cross">✘</span> = Not available</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CUSTOMER SENTIMENT
+    ============================================================ -->
+    <section id="sentiment">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-1 h-8 bg-green-500 rounded-full"></div>
+        <h2 class="text-3xl font-bold text-gray-900">Customer Sentiment</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <h3 class="font-semibold text-green-700 mb-4 flex items-center gap-2">👍 What Customers Love</h3>
+          <ul class="space-y-3 text-sm text-gray-600">
+            <li class="flex gap-2"><span class="text-green-500">●</span><span><strong>All-in-one simplicity:</strong> Marketing, sales, and service unified without complex integrations.</span></li>
+            <li class="flex gap-2"><span class="text-green-500">●</span><span><strong>World-class free tier:</strong> The free CRM is genuinely powerful, reducing barrier to adoption.</span></li>
+            <li class="flex gap-2"><span class="text-green-500">●</span><span><strong>Outstanding educational resources:</strong> HubSpot Academy courses and certifications are industry-respected.</span></li>
+            <li class="flex gap-2"><span class="text-green-500">●</span><span><strong>Fast time-to-value:</strong> Teams go live in days, not months, with minimal IT overhead.</span></li>
+            <li class="flex gap-2"><span class="text-green-500">●</span><span><strong>Strong inbound marketing toolkit:</strong> SEO recommendations, blog CMS, and landing pages in one place.</span></li>
+            <li class="flex gap-2"><span class="text-green-500">●</span><span><strong>Large integration marketplace:</strong> 1,500+ integrations with popular business tools.</span></li>
+          </ul>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <h3 class="font-semibold text-red-600 mb-4 flex items-center gap-2">👎 Common Complaints</h3>
+          <ul class="space-y-3 text-sm text-gray-600">
+            <li class="flex gap-2"><span class="text-red-400">●</span><span><strong>Price jump from Starter to Pro:</strong> The leap from ~$20/mo to ~$890/mo is steep and surprises growing teams.</span></li>
+            <li class="flex gap-2"><span class="text-red-400">●</span><span><strong>Contact-based pricing model:</strong> Costs can escalate quickly as contact lists grow.</span></li>
+            <li class="flex gap-2"><span class="text-red-400">●</span><span><strong>Reporting limitations at lower tiers:</strong> Advanced custom reporting locked behind expensive plans.</span></li>
+            <li class="flex gap-2"><span class="text-red-400">●</span><span><strong>Limited enterprise customisation:</strong> Not as flexible as Salesforce for highly complex enterprise workflows.</span></li>
+            <li class="flex gap-2"><span class="text-red-400">●</span><span><strong>Google acquisition uncertainty:</strong> 2024 acquisition rumours unsettled ~48% of customers to evaluate alternatives.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         STRATEGIC TAKEAWAYS
+    ============================================================ -->
+    <section id="takeaways">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-1 h-8 bg-yellow-500 rounded-full"></div>
+        <h2 class="text-3xl font-bold text-gray-900">Strategic Takeaways</h2>
+      </div>
+      <div class="space-y-4">
+
+        <div class="bg-white rounded-2xl p-6 shadow-sm border-l-4 border-orange-500 flex gap-5 items-start">
+          <div class="text-3xl">🤖</div>
+          <div>
+            <h3 class="font-bold text-gray-900 text-lg mb-1">1. AI is HubSpot's #1 Competitive Battleground</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              HubSpot's <strong>Breeze AI platform</strong> — spanning AI Agents, the Breeze Assistant, and generative content tools — signals a fundamental pivot from tool-provider to intelligent business platform. The acquisition of <strong>Frame AI</strong> (conversational intelligence) and <strong>XFunnel</strong> (AI search optimisation), plus the <strong>Claude CRM connector</strong>, show HubSpot is aggressively embedding AI at every layer. Competitors like Salesforce Einstein and Zoho Zia are responding, making AI capability and usability the defining differentiator through 2025–2027.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-sm border-l-4 border-blue-500 flex gap-5 items-start">
+          <div class="text-3xl">📈</div>
+          <div>
+            <h3 class="font-bold text-gray-900 text-lg mb-1">2. The "Move Upmarket" Strategy Carries Risk and Opportunity</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              HubSpot has steadily targeted mid-market and enterprise buyers (1,000+ employees), but its pricing model (especially the Starter → Professional cliff) can alienate growing SMBs. As it pushes Enterprise tiers, it faces <strong>Salesforce head-on</strong> — a battle of customisability and ecosystem depth. HubSpot must balance its SMB-friendly brand promise with the complexity demands of larger customers without losing its core UX advantage.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-sm border-l-4 border-green-500 flex gap-5 items-start">
+          <div class="text-3xl">🔗</div>
+          <div>
+            <h3 class="font-bold text-gray-900 text-lg mb-1">3. Data Enrichment is a Moat-Builder Post-Clearbit</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              The <strong>Clearbit acquisition</strong> was strategically brilliant — it gives HubSpot native B2B intent data and firmographic enrichment directly inside the CRM, reducing dependence on costly third-party enrichment tools. This strengthens the platform's value proposition for revenue teams and makes switching costs higher, improving retention among mid-market accounts.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-sm border-l-4 border-purple-500 flex gap-5 items-start">
+          <div class="text-3xl">🛡️</div>
+          <div>
+            <h3 class="font-bold text-gray-900 text-lg mb-1">4. Independence is Now a Product Feature</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              Google's failed acquisition bid in 2024 created an unexpected trust risk — nearly <strong>half of HubSpot's customers considered switching</strong> if the deal went through. HubSpot's leadership should actively market its independence, data privacy posture, and customer-first ethos as a distinct advantage over ecosystem-locked rivals (Microsoft Dynamics, Salesforce, Adobe). Trust and neutrality are underrated competitive weapons in CRM.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-sm border-l-4 border-red-500 flex gap-5 items-start">
+          <div class="text-3xl">💰</div>
+          <div>
+            <h3 class="font-bold text-gray-900 text-lg mb-1">5. Pricing Architecture Is Both a Strength and a Vulnerability</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              HubSpot's <strong>freemium model</strong> is its best customer acquisition engine — the free CRM seeds entire organisations and drives viral adoption. However, the dramatic price jump to Professional tiers and contact-based scaling costs are its most-cited reasons for churn. Competitors like <strong>Zoho</strong> and <strong>ActiveCampaign</strong> actively target frustrated HubSpot customers with lower-cost alternatives. A more gradual pricing ramp or modular à-la-carte options could substantially reduce price-driven churn.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SWOT SUMMARY
+    ============================================================ -->
+    <section id="swot">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-1 h-8 bg-indigo-500 rounded-full"></div>
+        <h2 class="text-3xl font-bold text-gray-900">SWOT Snapshot</h2>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="bg-green-50 border border-green-200 rounded-2xl p-5">
+          <h3 class="font-bold text-green-800 mb-3 flex items-center gap-2">💪 Strengths</h3>
+          <ul class="text-sm text-green-700 space-y-1 list-disc list-inside">
+            <li>Truly unified all-in-one platform</li>
+            <li>World-class free tier drives viral growth</li>
+            <li>Superior UX and ease of onboarding</li>
+            <li>HubSpot Academy builds brand loyalty</li>
+            <li>$2.63B revenue, profitable in 2024</li>
+            <li>Strong AI investment with Breeze platform</li>
+          </ul>
+        </div>
+        <div class="bg-red-50 border border-red-200 rounded-2xl p-5">
+          <h3 class="font-bold text-red-800 mb-3 flex items-center gap-2">⚠️ Weaknesses</h3>
+          <ul class="text-sm text-red-700 space-y-1 list-disc list-inside">
+            <li>Steep pricing jump at Professional tier</li>
+            <li>Contact-based billing inflates cost at scale</li>
+            <li>Less customisable than Salesforce for enterprise</li>
+            <li>Acquisition rumours damaged customer trust</li>
+            <li>Thinner reporting at mid tiers</li>
+          </ul>
+        </div>
+        <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5">
+          <h3 class="font-bold text-blue-800 mb-3 flex items-center gap-2">🚀 Opportunities</h3>
+          <ul class="text-sm text-blue-700 space-y-1 list-disc list-inside">
+            <li>AI-first CRM leadership position</li>
+            <li>AEO / AI search via XFunnel acquisition</li>
+            <li>Expand deeper into enterprise segment</li>
+            <li>International growth in APAC & EMEA</li>
+            <li>Platform ecosystem / marketplace expansion</li>
+          </ul>
+        </div>
+        <div class="bg-yellow-50 border border-yellow-200 rounded-2xl p-5">
+          <h3 class="font-bold text-yellow-800 mb-3 flex items-center gap-2">🌩️ Threats</h3>
+          <ul class="text-sm text-yellow-700 space-y-1 list-disc list-inside">
+            <li>Salesforce aggressively targeting mid-market</li>
+            <li>Zoho/ActiveCampaign undercut on price</li>
+            <li>Big Tech AI assistants disrupt CRM category</li>
+            <li>Future M&A speculation erodes trust</li>
+            <li>AI commoditisation reducing switching costs</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="mt-20 bg-gray-900 text-gray-400 py-10 px-6">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+      <div>
+        <div class="text-white font-bold text-lg mb-1">HubSpot Competitor Intelligence Report</div>
+        <div class="text-sm">Sources: Wikipedia, HubSpot.com, public filings, industry analysis &amp; news aggregation</div>
+      </div>
+      <div class="text-sm text-center md:text-right">
+        <div class="text-gray-300 font-medium">Generated by Competitor Intelligence Agent</div>
+        <div class="text-gray-500 text-xs mt-1">Data as of 2024–2025 · For strategic planning purposes only</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

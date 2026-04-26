@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:hgcatalyst.ai)",
+      "Bash(pip install *)",
+      "Bash(pip3 install *)",
+      "Bash(python *)",
+      "Bash(python3 *)",
+      "Skill(update-config)"
+    ]
+  }
+}
