@@ -69,12 +69,12 @@ A compact ReAct agent that supports multiple LLM providers — Anthropic, OpenAI
 ```bash
 python agent.py "What is 12 * 34, and who founded HubSpot?"
 # or via the run script:
-./run.sh "What is 12 * 34, and who founded HubSpot?"
+./run_simple-agent.sh "What is 12 * 34, and who founded HubSpot?"
 ```
 
 ## Optional: Datadog LLM Observability
 
-The run scripts (`run_competitor-intelligence-agent.sh` and `simple_agent/run.sh`) automatically enable Datadog tracing when `DD_API_KEY` is present in your environment. No code changes required.
+The run scripts (`run_competitor-intelligence-agent.sh` and `run_simple-agent.sh`) automatically enable Datadog tracing when `DD_API_KEY` is present in your environment. No code changes required.
 
 **Setup:**
 
