@@ -7,7 +7,8 @@ Change PROVIDER at the top to switch.
 Observability via Datadog LLM Observability (optional).
 Set DD_API_KEY + DD_SITE env vars and install ddtrace to enable.
 
-Run:  python3 simple_agent.py "What is 12 * 34, and who founded HubSpot?"
+Run:  ./run.sh "What is 12 * 34, and who founded HubSpot?"
+  or:  python3 agent.py "What is 12 * 34, and who founded HubSpot?"
 """
 
 import json
@@ -178,41 +179,25 @@ def _get_tokens(response: dict) -> dict:
         "output_tokens": usage.get("completion_tokens", 0),
     }
 
+def _annotate_llm_span(span, messages: list, data: dict, texts: list) -> None:
+    last_user = next(
+        (m for m in reversed(messages) if isinstance(m, dict) and m.get("role") == "user"),
+        None,
+    )
+    input_text = last_user.get("content", "") if last_user else ""
+    if not isinstance(input_text, str):
+        input_text = json.dumps(input_text)
+    LLMObs.annotate(
+        span,
+        input_data=[{"role": "user", "content": input_text}],
+        output_data=[{"role": "assistant", "content": texts[0] if texts else ""}],
+        metrics=_get_tokens(data),
+    )
+
 def _call_model(messages: list) -> dict:
-    """Call the model, wrapped in a Datadog LLM span when DD is enabled."""
-    if DD_ENABLED:
-        with LLMObs.llm(
-            model_name=cfg["model"],
-            model_provider=PROVIDER,
-            name="llm_call",
-        ) as span:
-            resp = requests.post(cfg["url"], headers=_make_headers(), json=_build_request(messages))
-            resp.raise_for_status()
-            data = resp.json()
-            tokens = _get_tokens(data)
-            # Extract plain-text output for the span
-            if cfg["format"] == "anthropic":
-                out_text = next((b["text"] for b in data["content"] if b["type"] == "text"), "")
-            else:
-                out_text = data["choices"][0]["message"].get("content") or ""
-            last_user = next(
-                (m for m in reversed(messages) if isinstance(m, dict) and m.get("role") == "user"),
-                None,
-            )
-            input_text = last_user.get("content", "") if last_user else ""
-            if not isinstance(input_text, str):
-                input_text = json.dumps(input_text)
-            LLMObs.annotate(
-                span,
-                input_data=[{"role": "user", "content": input_text}],
-                output_data=[{"role": "assistant", "content": out_text}],
-                metrics=tokens,
-            )
-            return data
-    else:
-        resp = requests.post(cfg["url"], headers=_make_headers(), json=_build_request(messages))
-        resp.raise_for_status()
-        return resp.json()
+    resp = requests.post(cfg["url"], headers=_make_headers(), json=_build_request(messages))
+    resp.raise_for_status()
+    return resp.json()
 
 def _parse(response: dict):
     """
@@ -264,50 +249,60 @@ def _tool_result_messages(results: list) -> list:
 # ---------------------------------------------------------------------------
 # ReAct loop
 # ---------------------------------------------------------------------------
-def run_agent(task: str) -> None:
-    messages    = [{"role": "user", "content": task}]
+def _step(messages: list):
+    """One model call → parsed result. Wrapped in a DD LLM span when enabled."""
+    if DD_ENABLED:
+        with LLMObs.llm(model_name=cfg["model"], model_provider=PROVIDER, name="llm_call") as span:
+            data = _call_model(messages)
+            parsed = _parse(data)
+            _annotate_llm_span(span, messages, data, parsed[2])
+            return parsed
+    return _parse(_call_model(messages))
+
+def _invoke_tool(name: str, inputs: dict) -> str:
+    if DD_ENABLED:
+        with LLMObs.tool(name=name) as span:
+            result = run_tool(name, inputs)
+            LLMObs.annotate(span, input_data=inputs, output_data=result)
+            return result
+    return run_tool(name, inputs)
+
+def _loop(messages: list) -> str:
     final_answer = ""
+    while True:
+        stop, assistant, texts, calls = _step(messages)
+        messages.append(assistant)
+
+        for text in texts:
+            if text.strip():
+                print(f"\nAgent: {text.strip()}")
+                final_answer = text.strip()
+
+        if stop == "end_turn":
+            return final_answer
+
+        results = []
+        for id_, name, inputs in calls:
+            print(f"\n  -> {name}({json.dumps(inputs)})")
+            result = _invoke_tool(name, inputs)
+            print(f"     = {result}")
+            results.append((id_, name, inputs, result))
+        for msg in _tool_result_messages(results):
+            messages.append(msg)
+
+def run_agent(task: str) -> str:
+    messages = [{"role": "user", "content": task}]
     print(f"\n[{PROVIDER} / {cfg['model']}]  Task: {task}\n{'-' * 50}")
-
-    def _loop():
-        nonlocal final_answer
-        while True:
-            response = _call_model(messages)
-            stop, assistant, texts, calls = _parse(response)
-
-            messages.append(assistant)
-
-            for text in texts:
-                if text.strip():
-                    print(f"\nAgent: {text.strip()}")
-                    final_answer = text.strip()
-
-            if stop == "end_turn":
-                break
-
-            if stop == "tool_use":
-                results = []
-                for id_, name, inputs in calls:
-                    print(f"\n  -> {name}({json.dumps(inputs)})")
-                    if DD_ENABLED:
-                        with LLMObs.tool(name=name) as span:
-                            result = run_tool(name, inputs)
-                            LLMObs.annotate(span, input_data=inputs, output_data=result)
-                    else:
-                        result = run_tool(name, inputs)
-                    print(f"     = {result}")
-                    results.append((id_, name, inputs, result))
-                for msg in _tool_result_messages(results):
-                    messages.append(msg)
 
     if DD_ENABLED:
         with LLMObs.agent(name="simple-agent") as span:
-            _loop()
+            final_answer = _loop(messages)
             LLMObs.annotate(span, input_data=task, output_data=final_answer)
     else:
-        _loop()
+        final_answer = _loop(messages)
 
     print(f"\n{'-' * 50}")
+    return final_answer
 
 # ---------------------------------------------------------------------------
 # Entry point
