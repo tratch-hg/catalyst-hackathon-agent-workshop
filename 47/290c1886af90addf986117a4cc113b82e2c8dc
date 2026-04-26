@@ -1,0 +1,64 @@
+run_simple_agent.sh
+  798b57f9b544089e 1-11
+  ecb11c46f5722d3d 14
+competitor-intelligence-agent.py
+  ecb11c46f5722d3d 11,15,43-56,126-139,159,273,277-283,286,294,311-314,316-317
+  004146387a442e71 155
+  798b57f9b544089e 4-5,12,20-37,190,201-210,256-257,260-272,274-276,284-285,287-293,295-298,300-303,305,307-309,318-358,360-369
+workshop.py
+  798b57f9b544089e 4,12,16,188,284-378,383,392,399
+simple_agent.py
+  798b57f9b544089e 198-204,207
+.env.example
+  798b57f9b544089e 1-7
+requirements.txt
+  798b57f9b544089e 4
+.gitignore
+  798b57f9b544089e 1-3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "47290c1886af90addf986117a4cc113b82e2c8dc",
+  "prompts": {
+    "004146387a442e71": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "862cb51d-fc66-4f14-89a6-0f39ebcfc5b0",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Tristan Ratchford",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 3,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "798b57f9b544089e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "0512e760-ca93-4a6e-8e40-d9e8371b977c",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Tristan Ratchford",
+      "messages": [],
+      "total_additions": 665,
+      "total_deletions": 84,
+      "accepted_lines": 483,
+      "overriden_lines": 3
+    },
+    "ecb11c46f5722d3d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3a6eadde-bd44-48c9-bdd0-20398995dfe7",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Tristan Ratchford",
+      "messages": [],
+      "total_additions": 49,
+      "total_deletions": 17,
+      "accepted_lines": 49,
+      "overriden_lines": 0
+    }
+  }
+}
