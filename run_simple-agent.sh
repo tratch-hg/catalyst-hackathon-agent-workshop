@@ -18,8 +18,8 @@ SSL_CERT_FILE=$(python3 -c "import certifi; print(certifi.where())" 2>/dev/null 
 if [ -n "${DD_API_KEY:-}" ]; then
     DD_SITE="us5.datadoghq.com" \
     DD_LLMOBS_ENABLED=1 \
-    DD_LLMOBS_ML_APP=competitor-intelligence-agent \
-    ddtrace-run python3 competitor-intelligence-agent.py "$@"
+    DD_LLMOBS_ML_APP=simple-agent \
+    ddtrace-run python3 agent.py "$@"
 else
-    python3 competitor-intelligence-agent.py "$@"
+    python3 agent.py "$@"
 fi
