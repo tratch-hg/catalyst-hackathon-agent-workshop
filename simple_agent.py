@@ -195,9 +195,16 @@ def _call_model(messages: list) -> dict:
                 out_text = next((b["text"] for b in data["content"] if b["type"] == "text"), "")
             else:
                 out_text = data["choices"][0]["message"].get("content") or ""
+            last_user = next(
+                (m for m in reversed(messages) if isinstance(m, dict) and m.get("role") == "user"),
+                None,
+            )
+            input_text = last_user.get("content", "") if last_user else ""
+            if not isinstance(input_text, str):
+                input_text = json.dumps(input_text)
             LLMObs.annotate(
                 span,
-                input_data=messages,
+                input_data=[{"role": "user", "content": input_text}],
                 output_data=[{"role": "assistant", "content": out_text}],
                 metrics=tokens,
             )
