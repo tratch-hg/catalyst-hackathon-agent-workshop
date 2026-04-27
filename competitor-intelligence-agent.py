@@ -285,7 +285,7 @@ def run_agent(company: str) -> None:
                     with LLMObs.llm(
                         model_name=MODEL,
                         model_provider="anthropic",
-                        name="agent_llm_call",
+                        name="llm_call",
                     ) as llm_span:
                         response = _call_claude(messages)
                         out_text = next(

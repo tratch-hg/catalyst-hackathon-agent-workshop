@@ -18,7 +18,7 @@ SSL_CERT_FILE=$(python3 -c "import certifi; print(certifi.where())" 2>/dev/null 
 if [ -n "${DD_API_KEY:-}" ]; then
     DD_SITE="us5.datadoghq.com" \
     DD_LLMOBS_ENABLED=1 \
-    DD_LLMOBS_ML_APP=simple-agent \
+    DD_LLMOBS_ML_APP=react-agent \
     ddtrace-run python3 react_agent.py "$@"
 else
     python3 react_agent.py "$@"
