@@ -49,6 +49,39 @@ python workshop.py
 
 Each step builds on the previous one, ending with a fully instrumented agent. Start here.
 
+### How the Claude Agent SDK powers the agentic loop
+
+Every agent in this workshop is built on a single primitive from the Anthropic Python SDK: `client.messages.create()`. That one call is stateless — it takes a list of messages and returns a response. The *agent loop* is just you calling it in a `while True`, accumulating the conversation, until the model signals it's done.
+
+```
+messages = [{"role": "user", "content": user_input}]
+
+while True:
+    response = client.messages.create(model=..., tools=..., messages=messages)
+    messages.append({"role": "assistant", "content": response.content})
+
+    if response.stop_reason == "end_turn":
+        break                              # model is done
+
+    elif response.stop_reason == "tool_use":
+        # execute your tools, collect results
+        messages.append({"role": "user", "content": tool_results})
+
+    elif response.stop_reason == "pause_turn":
+        # server-side tool (e.g. web_search) finished — just continue
+        messages.append({"role": "user", "content": []})
+```
+
+The key thing to notice: **the loop logic lives entirely in your code, not inside any framework**. The SDK just surfaces `stop_reason` so you know what to do next.
+
+### What the Claude Agent SDK gives you for free
+
+- **`stop_reason` replaces text parsing.** No prompt-engineering a stop phrase or regexing the output — the API tells you exactly why the model stopped.
+- **Typed content blocks.** Tool calls arrive as structured `ToolUseBlock` objects, not unstructured text you have to parse.
+- **Declarative tool schemas.** Define a tool as JSON once; the model knows the exact signature and the API validates the call.
+- **Built-in server-side tools.** Web search runs on Anthropic's infrastructure — no external API keys or rate-limit handling on your side.
+- **State is just a list.** No sessions, no databases, no serialisation. The conversation history is a plain Python list you append to and pass in each turn.
+
 ---
 
 ## Step 2 — A portable ReAct agent (`agent.py`)
