@@ -344,6 +344,7 @@ def step6_observability():
                 break
 
             if response.stop_reason == "pause_turn":
+                messages.append({"role": "user", "content": []})
                 continue
 
             if response.stop_reason == "tool_use":

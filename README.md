@@ -228,6 +228,6 @@ python competitor-intelligence-agent.py "HubSpot"
 ## Expected outputs
 
 - **`workshop.py`** — prints step output to stdout as you work through each step.
-- **Simple agent** — prints the final answer to stdout.
-- **Competitor intelligence agent** — saves an HTML file (e.g. `hubspot_intelligence.html`) to the working directory. Open it in a browser to see the formatted report.
+- **ReAct agent (`react_agent.py`)** — prints each tool call and result to stdout, followed by the final answer.
+- **Competitor intelligence agent (`competitor-intelligence-agent.py`)** — saves an HTML file (e.g. `hubspot_intelligence.html`) to the working directory. Open it in a browser to see the formatted report.
 - **Datadog** — traces appear in the LLM Observability dashboard within a few seconds of the agent finishing.
