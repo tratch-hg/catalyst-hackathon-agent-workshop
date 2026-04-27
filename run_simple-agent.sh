@@ -14,12 +14,5 @@ fi
 SSL_CERT_FILE=$(python3 -c "import certifi; print(certifi.where())" 2>/dev/null || true)
 [ -n "$SSL_CERT_FILE" ] && export SSL_CERT_FILE
 
-# Run with Datadog LLM Observability if DD_API_KEY is set, otherwise run plain
-if [ -n "${DD_API_KEY:-}" ]; then
-    DD_SITE="us5.datadoghq.com" \
-    DD_LLMOBS_ENABLED=1 \
-    DD_LLMOBS_ML_APP=react-agent \
-    ddtrace-run python3 react_agent.py "$@"
-else
-    python3 react_agent.py "$@"
-fi
+# LLMObs initialization is handled in-process via LLMObs.enable()
+python3 react_agent.py "$@"
