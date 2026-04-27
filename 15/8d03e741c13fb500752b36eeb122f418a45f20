@@ -1,0 +1,23 @@
+README.md
+  7a456e4e687bad73 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "158d03e741c13fb500752b36eeb122f418a45f20",
+  "prompts": {
+    "7a456e4e687bad73": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e3622c17-365f-4a10-a55f-a0a3adb320be",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Tristan Ratchford",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}
