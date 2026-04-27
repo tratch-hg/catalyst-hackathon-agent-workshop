@@ -19,7 +19,7 @@ if [ -n "${DD_API_KEY:-}" ]; then
     DD_SITE="us5.datadoghq.com" \
     DD_LLMOBS_ENABLED=1 \
     DD_LLMOBS_ML_APP=simple-agent \
-    ddtrace-run python3 agent.py "$@"
+    ddtrace-run python3 react_agent.py "$@"
 else
-    python3 agent.py "$@"
+    python3 react_agent.py "$@"
 fi
