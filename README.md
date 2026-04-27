@@ -28,7 +28,9 @@ ANTHROPIC_API_KEY=sk-ant-...
 # DD_SITE=us5.datadoghq.com
 ```
 
-## Workshop
+---
+
+## Step 1 — Build an agent from scratch (`workshop.py`)
 
 The main workshop file is `workshop.py`. It walks through six self-contained steps — run any step by changing the `STEP` variable at the bottom of the file, then:
 
@@ -45,24 +47,30 @@ python workshop.py
 | 5 | Full agent | Server-side web search, HTML report generation, `"pause_turn"` |
 | 6 | Add observability | Wrapping agent/LLM/tool calls in Datadog spans |
 
-## Agent files
+Each step builds on the previous one, ending with a fully instrumented agent. Start here.
 
-### `workshop.py`
-The primary teaching artifact. Each step builds on the previous one, ending with a fully instrumented agent. Start here.
+---
 
-### `competitor-intelligence-agent.py`
-A complete autonomous agent that researches a company and writes a self-contained HTML intelligence report. It defines three custom tools — `web_search`, `fetch_page`, and `save_report` — and runs an agentic loop until the report is written to disk.
+## Step 2 — A portable ReAct agent (`agent.py`)
 
-**Teaches:** Tool definition, multi-turn loops, web scraping, structured HTML output, and optional Datadog instrumentation without modifying core agent logic.
+### How the ReAct loop works
 
-```bash
-python competitor-intelligence-agent.py "HubSpot"
-# or via the run script (enables Datadog automatically if DD_API_KEY is set):
-./run_competitor-intelligence-agent.sh "HubSpot"
+ReAct (**Re**asoning + **Act**ing) is a prompting pattern introduced by Yao et al. (2022) that interleaves the model's chain-of-thought reasoning with concrete actions (tool calls). Before taking any action, the model writes out its reasoning as a *Thought*; it then emits an *Action* (a tool call); the environment returns an *Observation* (the tool result); and the cycle repeats until the model produces a final answer.
+
+```
+Thought  →  Action  →  Observation
+   ↑                        |
+   └────────────────────────┘
+         (repeat until done)
 ```
 
+This matters because it makes the agent's behaviour inspectable and steerable — you can read the thought trace to understand *why* the agent called a tool, not just *what* it called. It also tends to reduce hallucination compared to asking the model to answer in one shot, because each action grounds the next reasoning step in real retrieved information.
+
+> **Further reading:** [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) — Yao et al., 2022 (the original paper). For a broader overview of agent architectures see Anthropic's [Building effective agents](https://www.anthropic.com/research/building-effective-agents) guide.
+
 ### `agent.py`
-A compact ReAct agent that supports multiple LLM providers — Anthropic, OpenAI, DeepSeek, Groq, and local Ollama — through a unified interface. Switch providers by changing `PROVIDER` at the top of the file.
+
+Once you understand the core loop from `workshop.py`, `agent.py` shows how to generalise it. It's a compact ReAct agent that supports multiple LLM providers — Anthropic, OpenAI, DeepSeek, Groq, and local Ollama — through a unified interface. Switch providers by changing `PROVIDER` at the top of the file.
 
 **Teaches:** How to abstract agent logic away from provider-specific APIs so the same agentic loop works across different models. Includes a calculator tool and a web search stub.
 
@@ -72,9 +80,11 @@ python agent.py "What is 12 * 34, and who founded HubSpot?"
 ./run_simple-agent.sh "What is 12 * 34, and who founded HubSpot?"
 ```
 
-## Optional: Datadog LLM Observability
+---
 
-The run scripts (`run_competitor-intelligence-agent.sh` and `run_simple-agent.sh`) automatically enable Datadog tracing when `DD_API_KEY` is present in your environment. No code changes required.
+## Step 3 — Observability with Datadog
+
+Once your agent is running, you'll want visibility into what it's actually doing — which tools it called, how many tokens it used, and where it spent time. The run scripts (`run_competitor-intelligence-agent.sh` and `run_simple-agent.sh`) automatically enable Datadog tracing when `DD_API_KEY` is present in your environment. No code changes required.
 
 **Setup:**
 
@@ -86,15 +96,32 @@ The run scripts (`run_competitor-intelligence-agent.sh` and `run_simple-agent.sh
 
 2. Run an agent via its run script:
    ```bash
-   ./run_competitor-intelligence-agent.sh "Salesforce"
+   ./run_simple-agent.sh "What is 12 * 34, and who founded HubSpot?"
    ```
 
 3. View traces in the [Datadog LLM Observability dashboard](https://us5.datadoghq.com/llm/traces).
 
 Each LLM call, tool call, and agent run is captured as a nested span with input/output content and token counts. Running without `DD_API_KEY` set falls back to plain `python3` with no observability overhead.
 
+---
+
+## Step 4 — A real-world agent (`competitor-intelligence-agent.py`)
+
+Now put it all together. `competitor-intelligence-agent.py` is a complete autonomous agent that researches a company and writes a self-contained HTML intelligence report. It defines three custom tools — `web_search`, `fetch_page`, and `save_report` — and runs an agentic loop until the report is written to disk.
+
+**Teaches:** Tool definition, multi-turn loops, web scraping, structured HTML output, and optional Datadog instrumentation without modifying core agent logic.
+
+```bash
+python competitor-intelligence-agent.py "HubSpot"
+# or via the run script (enables Datadog automatically if DD_API_KEY is set):
+./run_competitor-intelligence-agent.sh "HubSpot"
+```
+
+---
+
 ## Expected outputs
 
-- **Competitor intelligence agent** — saves an HTML file (e.g. `salesforce_intelligence.html`) to the working directory. Open it in a browser to see the formatted report.
+- **`workshop.py`** — prints step output to stdout as you work through each step.
 - **Simple agent** — prints the final answer to stdout.
+- **Competitor intelligence agent** — saves an HTML file (e.g. `hubspot_intelligence.html`) to the working directory. Open it in a browser to see the formatted report.
 - **Datadog** — traces appear in the LLM Observability dashboard within a few seconds of the agent finishing.
