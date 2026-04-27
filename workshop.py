@@ -2,7 +2,10 @@
 HG Catalyst Hackathon — Building an Autonomous Agent in 30 Minutes
 ===================================================================
 This file walks through 6 progressive steps, each a self-contained runnable
-script. Uncomment the step you want to run and execute:  python workshop.py
+script. Run it and pick a step from the menu, or pass the step number directly:
+
+    python workshop.py        # interactive menu
+    python workshop.py 3      # run step 3 directly
 
 STEP 1 — Hello World           ~3 min
 STEP 2 — Define a tool         ~5 min
@@ -377,23 +380,48 @@ def step6_observability():
 
 
 # ===========================================================================
-# Runner — change STEP to run a different step
+# Runner
 # ===========================================================================
 
-STEP = 1          # ← change this to 1, 2, 3, 4, 5, or 6
+STEPS = {
+    1: ("Hello World",        step1_hello_world),
+    2: ("Define a tool",      step2_define_a_tool),
+    3: ("Execute the tool",   step3_execute_the_tool),
+    4: ("The agent loop",     step4_agent_loop),
+    5: ("Full agent",         step5_full_agent),
+    6: ("Add observability",  step6_observability),
+}
+
+def _menu() -> int:
+    print("\nHG Catalyst Hackathon — Workshop Steps")
+    print("=" * 40)
+    for num, (label, _) in STEPS.items():
+        print(f"  {num}. {label}")
+    print()
+    while True:
+        raw = input("Select a step (1–6): ").strip()
+        if raw.isdigit() and int(raw) in STEPS:
+            return int(raw)
+        print(f"  Please enter a number between 1 and 6.")
 
 if __name__ == "__main__":
-    steps = {
-        1: step1_hello_world,
-        2: step2_define_a_tool,
-        3: step3_execute_the_tool,
-        4: step4_agent_loop,
-        5: step5_full_agent,
-        6: step6_observability,
-    }
-    fn = steps.get(STEP)
-    if fn:
-        print(f"{'='*60}\nRunning Step {STEP}\n{'='*60}\n")
-        fn()
-    else:
-        print(f"Unknown step: {STEP}. Choose 1–6.")
+    if len(sys.argv) > 1:
+        arg = sys.argv[1]
+        if arg.isdigit() and int(arg) in STEPS:
+            label, fn = STEPS[int(arg)]
+            print(f"\n{'='*60}\nStep {arg}: {label}\n{'='*60}\n")
+            fn()
+            sys.exit(0)
+        else:
+            print(f"Usage: python workshop.py [1-6]")
+            sys.exit(1)
+
+    try:
+        while True:
+            step = _menu()
+            label, fn = STEPS[step]
+            print(f"\n{'='*60}\nStep {step}: {label}\n{'='*60}\n")
+            fn()
+            print()
+    except KeyboardInterrupt:
+        print("\nBye!")

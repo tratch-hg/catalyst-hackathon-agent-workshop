@@ -70,7 +70,7 @@ This matters because it makes the agent's behaviour inspectable and steerable �
 
 ### `agent.py`
 
-Once you understand the core loop from `workshop.py`, `agent.py` shows how to generalise it. It's a compact ReAct agent that supports multiple LLM providers — Anthropic, OpenAI, DeepSeek, Groq, and local Ollama — through a unified interface. Switch providers by changing `PROVIDER` at the top of the file.
+If you want more control over the agent loop and want to prevent vendor lock-in, here's how to build a simple ReAct loop that supports multiple LLM providers — Anthropic, OpenAI, DeepSeek, Groq, and local Ollama. Switch providers by changing `PROVIDER` at the top of the file.
 
 **Teaches:** How to abstract agent logic away from provider-specific APIs so the same agentic loop works across different models. Includes a calculator tool and a web search stub.
 
