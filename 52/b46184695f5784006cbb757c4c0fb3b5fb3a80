@@ -1,0 +1,29 @@
+workshop.py
+  7a456e4e687bad73 347
+README.md
+  7a456e4e687bad73 231-232
+run_competitor-intelligence-agent.sh
+  7a456e4e687bad73 17-18
+run_simple-agent.sh
+  7a456e4e687bad73 17-18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "52b46184695f5784006cbb757c4c0fb3b5fb3a80",
+  "prompts": {
+    "7a456e4e687bad73": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e3622c17-365f-4a10-a55f-a0a3adb320be",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Tristan Ratchford",
+      "messages": [],
+      "total_additions": 7,
+      "total_deletions": 20,
+      "accepted_lines": 7,
+      "overriden_lines": 0
+    }
+  }
+}
