@@ -27,7 +27,7 @@ except ImportError:
 
 DD_ENABLED = _DD_AVAILABLE and bool(os.environ.get("DD_API_KEY"))
 if DD_ENABLED:
-    LLMObs.enable(ml_app="simple-agent", agentless_enabled=True)
+    LLMObs.enable(ml_app="react-agent", agentless_enabled=True)
 
 # ---------------------------------------------------------------------------
 # Pick your provider  →  "anthropic" | "openai" | "deepseek" | "groq" | "ollama"
@@ -295,7 +295,7 @@ def run_agent(task: str) -> str:
     print(f"\n[{PROVIDER} / {cfg['model']}]  Task: {task}\n{'-' * 50}")
 
     if DD_ENABLED:
-        with LLMObs.agent(name="simple-agent") as span:
+        with LLMObs.agent(name="react-agent") as span:
             final_answer = _loop(messages)
             LLMObs.annotate(span, input_data=task, output_data=final_answer)
     else:

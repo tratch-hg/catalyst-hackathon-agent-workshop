@@ -144,6 +144,79 @@ Now put it all together. `competitor-intelligence-agent.py` is a complete autono
 
 **Teaches:** Tool definition, multi-turn loops, web scraping, structured HTML output, and optional Datadog instrumentation without modifying core agent logic.
 
+### How the agent loop works
+
+```
+Input: "Research this company: HubSpot"
+            │
+            ▼
+      ┌───────────┐
+      │  Turn 1   │  stop_reason: "tool_use"
+      └─────┬─────┘
+            ├── web_search("HubSpot overview and products")
+            ├── web_search("HubSpot key competitors")
+            └── web_search("HubSpot recent news and funding")
+                      │  results appended to messages
+                      ▼
+      ╔══════════════════════════════════════════════════════════════╗
+      ║ Thought: I have a broad overview and know the main          ║
+      ║ competitors. I still need pricing details, customer         ║
+      ║ sentiment, and a few specific pages to read closely.        ║
+      ╚══════════════════════════════════════════════════════════════╝
+                      │
+                      ▼
+      ┌───────────┐
+      │  Turn 2   │  stop_reason: "tool_use"
+      └─────┬─────┘
+            ├── web_search("HubSpot pricing and plans")
+            ├── web_search("HubSpot customer reviews")
+            ├── fetch_page("https://hubspot.com/products")
+            └── fetch_page("https://g2.com/products/hubspot/...")
+                      │  results appended to messages
+                      ▼
+      ╔══════════════════════════════════════════════════════════════╗
+      ║ Thought: I have pricing tiers and customer sentiment. The   ║
+      ║ G2 page gave a useful feature breakdown. One more targeted  ║
+      ║ search on the Salesforce comparison will complete the       ║
+      ║ competitive picture before I write the report.             ║
+      ╚══════════════════════════════════════════════════════════════╝
+                      │
+                      ▼
+      ┌───────────┐
+      │  Turn 3   │  stop_reason: "tool_use"
+      └─────┬─────┘
+            ├── web_search("HubSpot vs Salesforce feature comparison")
+            └── fetch_page("https://...")
+                      │  results appended to messages
+                      ▼
+      ╔══════════════════════════════════════════════════════════════╗
+      ║ Thought: I now have comprehensive data across all required  ║
+      ║ areas — products, competitors, pricing, reviews, and        ║
+      ║ strategy. I have enough to write a complete report.         ║
+      ╚══════════════════════════════════════════════════════════════╝
+                      │
+                      ▼
+      ┌───────────┐
+      │  Turn N   │  stop_reason: "tool_use"
+      └─────┬─────┘
+            └── save_report("hubspot_intelligence.html", "<html>...")
+                      │  "Report saved to hubspot_intelligence.html"
+                      ▼
+      ┌───────────┐
+      │ Turn N+1  │  stop_reason: "end_turn"  →  loop exits
+      └───────────┘
+```
+
+The three tools each serve a distinct role in the research pipeline:
+
+| Tool | Purpose | Called |
+|---|---|---|
+| `web_search(query)` | Searches DuckDuckGo, returns titles, URLs, and snippets | Multiple times across turns 1–N |
+| `fetch_page(url)` | Fetches a full page and strips it to clean text (capped at 6 000 chars) | 2–3 times on the most relevant URLs |
+| `save_report(filename, html)` | Writes the finished HTML report to disk | Exactly once at the end |
+
+The agent decides autonomously how many searches to run and which pages to fetch — you never hard-code the research plan.
+
 ```bash
 python competitor-intelligence-agent.py "HubSpot"
 # or via the run script (enables Datadog automatically if DD_API_KEY is set):
