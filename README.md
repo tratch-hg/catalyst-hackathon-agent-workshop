@@ -84,7 +84,7 @@ The key thing to notice: **the loop logic lives entirely in your code, not insid
 
 ---
 
-## Step 2 — A portable ReAct agent (`agent.py`)
+## Step 2 — A portable ReAct agent (`react_agent.py`)
 
 ### How the ReAct loop works
 
@@ -101,14 +101,14 @@ This matters because it makes the agent's behaviour inspectable and steerable �
 
 > **Further reading:** [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) — Yao et al., 2022 (the original paper). For a broader overview of agent architectures see Anthropic's [Building effective agents](https://www.anthropic.com/research/building-effective-agents) guide.
 
-### `agent.py`
+### `react_agent.py`
 
 If you want more control over the agent loop and want to prevent vendor lock-in, here's how to build a simple ReAct loop that supports multiple LLM providers — Anthropic, OpenAI, DeepSeek, Groq, and local Ollama. Switch providers by changing `PROVIDER` at the top of the file.
 
 **Teaches:** How to abstract agent logic away from provider-specific APIs so the same agentic loop works across different models. Includes a calculator tool and a web search stub.
 
 ```bash
-python agent.py "What is 12 * 34, and who founded HubSpot?"
+python react_agent.py "What is 12 * 34, and who founded HubSpot?"
 # or via the run script:
 ./run_simple-agent.sh "What is 12 * 34, and who founded HubSpot?"
 ```
