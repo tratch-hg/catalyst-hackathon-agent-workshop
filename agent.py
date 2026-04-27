@@ -7,7 +7,7 @@ Change PROVIDER at the top to switch.
 Observability via Datadog LLM Observability (optional).
 Set DD_API_KEY + DD_SITE env vars and install ddtrace to enable.
 
-Run:  ./run.sh "What is 12 * 34, and who founded HubSpot?"
+Run:  ./run_simple-agent.sh "What is 12 * 34, and who founded HubSpot?"
   or:  python3 agent.py "What is 12 * 34, and who founded HubSpot?"
 """
 
