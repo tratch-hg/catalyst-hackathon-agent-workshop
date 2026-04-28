@@ -34,6 +34,7 @@ if DD_ENABLED:
         api_key=os.environ.get("DD_API_KEY"),
         site=os.environ.get("DD_SITE", "us5.datadoghq.com"),
         agentless_enabled=True,
+        integrations_enabled=False,
     )
 
 # ---------------------------------------------------------------------------
