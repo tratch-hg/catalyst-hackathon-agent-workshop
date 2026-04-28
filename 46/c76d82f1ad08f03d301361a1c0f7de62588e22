@@ -1,0 +1,25 @@
+workshop.py
+  64d2e9f19374ccf5 306
+competitor-intelligence-agent.py
+  64d2e9f19374ccf5 37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "46c76d82f1ad08f03d301361a1c0f7de62588e22",
+  "prompts": {
+    "64d2e9f19374ccf5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e99dccf1-4dd0-437e-8b56-0032fc84780b",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Tristan Ratchford",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 0,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    }
+  }
+}
