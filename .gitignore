@@ -1,4 +1,5 @@
 .env
 *.html
+!day_ai_intelligence.html
 __pycache__/
 .DS_Store

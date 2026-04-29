@@ -429,3 +429,9 @@ if __name__ == "__main__":
         sys.exit(1)
 
     run_agent(company_name)
+
+    if DD_ENABLED:
+        try:
+            LLMObs.disable()
+        except Exception:
+            pass
